@@ -131,7 +131,12 @@ Repair RepairList::currRepair() const
 // the current repair has been serviced so move the iterator to the next request
 void RepairList::next()
 {
-			_nowServicing++;
+
+	if (_nowServicing != _dailyList.end()){
+		_nowServicing++;
+		_dailyList.pop_front();
+	}
+
 }
 
 // TO DO
@@ -139,7 +144,10 @@ void RepairList::next()
 
 void RepairList::prev()
 {
-	_nowServicing--;
+	if (_nowServicing != _dailyList.begin()){
+		_nowServicing--;
+	}
+
 }
 
 
@@ -147,7 +155,7 @@ void RepairList::prev()
 // add a repair request to the current list
 void RepairList::addToList(const Repair& newRequest)
 {
-		_dailyList.pushback(newRequest);
+		_dailyList.push_back(newRequest);
 }
 
 // TO DO
@@ -156,6 +164,6 @@ void RepairList::addToList(const Repair& newRequest)
 // changes to the current iterator
 void RepairList::insertLoyal(const Repair& newRequest)
 {
-	_dailyList.insert(it, newRequest);
+	_dailyList.insert(_nowServicing, newRequest);
 
 }
