@@ -117,6 +117,7 @@ void RepairList::loadAdvanceList(const std::string& filename)
 
 std::size_t RepairList::size() const
 {
+	//Return the size of the list
 	return _dailyList.size();
 }
 
@@ -124,6 +125,7 @@ std::size_t RepairList::size() const
 // return the current repair
 Repair RepairList::currRepair() const
 {
+	//Return whats at the head of the list
 	return _dailyList.front();
 }
 
@@ -131,8 +133,8 @@ Repair RepairList::currRepair() const
 // the current repair has been serviced so move the iterator to the next request
 void RepairList::next()
 {
-
-	if (_nowServicing != _dailyList.end()){
+	//Check if _nowServicing is at the end of the list. If not iterate and pop_front
+	if (_nowServicing != _dailyList.cend()){
 		_nowServicing++;
 		_dailyList.pop_front();
 	}
@@ -144,7 +146,8 @@ void RepairList::next()
 
 void RepairList::prev()
 {
-	if (_nowServicing != _dailyList.begin()){
+	//Check if _nowServicing is at the front of the list. If not, iterate backward.
+	if (_nowServicing != _dailyList.cbegin()){
 		_nowServicing--;
 	}
 
@@ -164,6 +167,11 @@ void RepairList::addToList(const Repair& newRequest)
 // changes to the current iterator
 void RepairList::insertLoyal(const Repair& newRequest)
 {
-	_dailyList.insert(_nowServicing, newRequest);
+	//Create a Repair object
+	std::list<Repair>::iterator inserter;
+	//Set it equal to the iterator
+	inserter = _nowServicing;
+	//Insert the newRequest at the postition one space infront of _nowServicing(++inserter)
+	_dailyList.insert(++inserter, newRequest);
 
 }
