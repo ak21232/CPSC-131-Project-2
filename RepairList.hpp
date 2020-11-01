@@ -126,17 +126,16 @@ std::size_t RepairList::size() const
 Repair RepairList::currRepair() const
 {
 	//Return whats at the head of the list
-	return _dailyList.front();
+	return *_nowServicing;
 }
 
 // TO DO
 // the current repair has been serviced so move the iterator to the next request
 void RepairList::next()
 {
-	//Check if _nowServicing is at the end of the list. If not iterate and pop_front
-	if (_nowServicing != _dailyList.cend()){
+	//Check if _nowServicing is at the end of the list. If not iterate
+	if (_nowServicing != _dailyList.end()){
 		_nowServicing++;
-		_dailyList.pop_front();
 	}
 
 }
@@ -147,7 +146,7 @@ void RepairList::next()
 void RepairList::prev()
 {
 	//Check if _nowServicing is at the front of the list. If not, iterate backward.
-	if (_nowServicing != _dailyList.cbegin()){
+	if (_nowServicing != _dailyList.begin()){
 		_nowServicing--;
 	}
 
